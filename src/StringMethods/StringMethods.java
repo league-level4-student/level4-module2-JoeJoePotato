@@ -1,5 +1,6 @@
 package StringMethods;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Base64;
 
@@ -46,8 +47,8 @@ public class StringMethods {
 		if(s.contains("underscores")==true) {
 			for (int i = 0; i < s.length(); i++) {
 				if(s.charAt(i)==' ') {
-					String t1=s.substring(0, i-1);
-					String t2=s.substring(i+1, s.length()-1);
+					String t1=s.substring(0, i);
+					String t2=s.substring(i+1, s.length());
 			s=t1+"_"+t2;
 				
 				}
@@ -65,46 +66,32 @@ public class StringMethods {
 		String name1;
 		String name2;
 		String name3;
-		
-		for (int i = 0; i < s1.length(); i++) {
-			if(s1.charAt(i)==' ') {
-				if(i != 0 ) {
-					if(i !=s1.length()-1) {
-						if(s1.charAt(i+1) != ' ') {
-							divider=i;
-						}
-					}
-				}
+	for (int i = 0; i < s1.length(); i++) {
+		if(s1.charAt(i)==' ' && s1.charAt(i-1) != ' ' && s1.charAt(i+1) != ' ') {
+			if(i != 0 && i!= s1.length()-1) {
+			divider=i;	
 			}
 		}
-		name1=s1.substring(divider);
-		
-		for (int i = 0; i < s2.length(); i++) {
-			if(s2.charAt(i)==' ') {
-				if(i != 0 ) {
-					if(i !=s2.length()-1) {
-						if(s2.charAt(i+1) != ' ') {
-							divider=i;
-						}
-					}
-				}
+	}	
+	name1=s1.substring(divider);
+	
+	for (int i = 0; i < s2.length(); i++) {
+		if(s2.charAt(i)==' ' && s2.charAt(i-1) != ' ' && s2.charAt(i+1) != ' ') {
+			if(i != 0 && i!= s2.length()-1) {
+			divider=i;	
 			}
 		}
-		name2=s2.substring(divider);
-		
-		for (int i = 0; i < s3.length(); i++) {
-			if(s3.charAt(i)==' ') {
-				if(i != 0 ) {
-					if(i !=s3.length()-1) {
-						if(s3.charAt(i+1) != ' ') {
-							divider=i;
-						}
-					}
-				}
+	}	
+	name2=s2.substring(divider);
+	
+	for (int i = 0; i < s3.length(); i++) {
+		if(s3.charAt(i)==' ' && s3.charAt(i-1) != ' ' && s3.charAt(i+1) != ' ') {
+			if(i != 0 && i!= s3.length()-1) {
+			divider=i;	
 			}
 		}
-		name3=s3.substring(divider);
-		
+	}	
+	name3=s3.substring(divider);
 		if(name1.compareTo(name2)<0 && name1.compareTo(name3)<0) {
 			return s1;
 		} else if(name2.compareTo(name3)<0 && name2.compareTo(name1)<0) {
@@ -121,23 +108,23 @@ public class StringMethods {
 	public static int numeralSum(String s) {
 		int yeehaw=0;
 		for (int i = 0; i < s.length(); i++) {
+			if(Character.isDigit(s.charAt(i))==true) {
 			yeehaw+=Character.getNumericValue(s.charAt(i));
-		}
+			}
+			}
 		return yeehaw;
 	}
 	
 	
 	// Return the number of times String substring appears in String s
 	public static int substringCount(String s, String substring) {
-		int yeehaw=0;
-		//sorry, but I keep thinking of a line from a 10-minute western movie my friend made
-		// at the end the hero says "looks like you just yeed your last haw, partner."
+		ArrayList <Integer> occurences=new ArrayList <Integer>();
 		for (int i = 0; i < s.length(); i++) {
-			if(s.substring(i).equals(substring)) {
-				yeehaw++;
+			if(i+substring.length()-1<s.length() && s.substring(i, i+substring.length()).equals(substring)) {
+				occurences.add(i);
 			}
 		}
-		return yeehaw;
+		return occurences.size();
 	}
 
 	// Call Utitilities.encrypt to encrypt String s
@@ -159,13 +146,13 @@ public class StringMethods {
 	public static int wordsEndsWithSubstring(String s, String substring) {
 		int yeehaw=0;
 		for (int i = 0; i < s.length(); i++) {
-			if(s.charAt(i)==' ') {
+			if(s.charAt(i)==' ' && i-substring.length()>-1) {
 			   if(s.substring(i-substring.length(), i).equals(substring)) {
 				   yeehaw++;
 			   }
 			}
 		}
-		return 0;
+		return yeehaw;
 	}
 	
 
@@ -173,7 +160,13 @@ public class StringMethods {
 	// of String substring and the final occurrence
 	// You can assume that substring will appear at least twice
 	public static int distance(String s, String substring) {
-		return 0;
+		ArrayList <Integer> occurences=new ArrayList <Integer>();
+		for (int i = 0; i < s.length(); i++) {
+			if(i+substring.length()<s.length() && s.substring(i, i+substring.length()).equals(substring)) {
+				occurences.add(i);
+			}
+		}
+		return occurences.size()-occurences.get(0);
 	}
 
 
@@ -186,6 +179,14 @@ public class StringMethods {
 		if(Character.isLetter(s.charAt(i))==true) {
 			uncluttered=uncluttered+s.charAt(i);
 		}
+		uncluttered=uncluttered.toLowerCase();
+		}
+		for(int i=0; i<uncluttered.length()/2; i++) {
+			if(uncluttered.charAt(i)==uncluttered.charAt(uncluttered.length()-(i+1))) {
+				
+			}else {
+				return false;
+			}
 		}
 		return true;
 	}
