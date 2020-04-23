@@ -66,41 +66,44 @@ public class StringMethods {
 		String name1;
 		String name2;
 		String name3;
-	for (int i = 0; i < s1.length(); i++) {
+		String leader = null;
+	for (int i = 1; i < s1.length(); i++) {
+		if(i!= s1.length()-1) {
 		if(s1.charAt(i)==' ' && s1.charAt(i-1) != ' ' && s1.charAt(i+1) != ' ') {
-			if(i != 0 && i!= s1.length()-1) {
 			divider=i;	
 			}
 		}
 	}	
 	name1=s1.substring(divider);
 	
-	for (int i = 0; i < s2.length(); i++) {
+	for (int i = 1; i < s2.length(); i++) {
+		if(i != 0 && i!= s2.length()-1) {
 		if(s2.charAt(i)==' ' && s2.charAt(i-1) != ' ' && s2.charAt(i+1) != ' ') {
-			if(i != 0 && i!= s2.length()-1) {
+			
 			divider=i;	
 			}
 		}
 	}	
 	name2=s2.substring(divider);
 	
-	for (int i = 0; i < s3.length(); i++) {
+	for (int i = 1; i < s3.length(); i++) {
+		if(i != 0 && i!= s3.length()-1) {
 		if(s3.charAt(i)==' ' && s3.charAt(i-1) != ' ' && s3.charAt(i+1) != ' ') {
-			if(i != 0 && i!= s3.length()-1) {
+			
 			divider=i;	
 			}
 		}
 	}	
 	name3=s3.substring(divider);
 		if(name1.compareTo(name2)<0 && name1.compareTo(name3)<0) {
-			return s1;
+			leader= s1;
 		} else if(name2.compareTo(name3)<0 && name2.compareTo(name1)<0) {
-			return s2;
+			leader= s2;
 		} else if(name3.compareTo(name1)<0 && name3.compareTo(name2)<0) {
-			return s1;
+			leader= s3;
 		} 
-		
-		return null;
+    leader=leader.trim();
+		return leader;
 	}
 	
 	
@@ -162,11 +165,11 @@ public class StringMethods {
 	public static int distance(String s, String substring) {
 		ArrayList <Integer> occurences=new ArrayList <Integer>();
 		for (int i = 0; i < s.length(); i++) {
-			if(i+substring.length()<s.length() && s.substring(i, i+substring.length()).equals(substring)) {
+			if(i+substring.length()-1<s.length() && s.substring(i, i+substring.length()).equals(substring)) {
 				occurences.add(i);
 			}
 		}
-		return occurences.size()-occurences.get(0);
+		return occurences.get(occurences.size()-1)-(occurences.get(0)+substring.length());
 	}
 
 
